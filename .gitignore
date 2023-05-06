@@ -1,5 +1,5 @@
 /Comments/node_modules/*
 /event-bus/node_modules/*
 /Posts/node_modules/*
-/React app/node_modules/*
+/React app/react-app/node_modules/*
 /Query/node_modules/*
