@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: posts.com # We have changed the host here it is our domain for now. For this we have to add this host in our ubuntu: /etc/hosts file to redirect to 127.0.0.1. Whenever we write posts.com it will redirect to localhost
+      http:
+        paths:
+         - path: /posts 
+           pathType: Prefix
+           backend:
+            service:
+              name: posts-clusterip-srv
+              port:
+                number: 4000

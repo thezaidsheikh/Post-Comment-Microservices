@@ -1,6 +1,6 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { randomBytes } = require('crypto');
+const express = require("express");
+const bodyParser = require("body-parser");
+const { randomBytes } = require("crypto");
 const cors = require("cors");
 const axios = require("axios");
 
@@ -11,23 +11,28 @@ app.use(bodyParser.json());
 const posts = {};
 
 app.get("/posts", (req, res) => {
-    res.send(posts);
+  res.send(posts);
 });
 app.post("/posts", (req, res) => {
-    const id = randomBytes(4).toString("hex");
-    const { title } = req.body;
-    posts[id] = {
-        id, title
-    };
-    res.send({ id, title });
-    axios.post("http://localhost:4005/events", { type: "postCreated", data: { id, title } })
+  const id = randomBytes(4).toString("hex");
+  const { title } = req.body;
+  posts[id] = {
+    id,
+    title,
+  };
+  res.send({ id, title });
+  axios.post("http://event-bus-srv:4005/events", {
+    type: "postCreated",
+    data: { id, title },
+  });
 });
 
-app.post('/events', (req, res) => {
-    console.log("Received Event in post", req.body.type);
-    res.send({});
+app.post("/events", (req, res) => {
+  console.log("Received Event in post", req.body.type);
+  res.send({});
 });
 
 app.listen(4000, () => {
-    console.log("Server listening to port 4000");
+  console.log("version changed");
+  console.log("Server listening to port 4000");
 });
